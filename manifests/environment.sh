@@ -3,23 +3,32 @@
 # 生成 EncryptionConfig 所需的加密 key
 export ENCRYPTION_KEY=$(head -c 32 /dev/urandom | base64)
 
+# 集群所有机器 IP 数组
+export ALL_NODE_IPS=(10.1.80.71 10.1.80.72 10.1.80.73 10.1.80.74)
+
+# 集群所有IP 对应的主机名数组
+export ALL_NODE_NAMES=(k8s01 k8s02 k8s03 k8s04)
+
 # 集群各机器 IP 数组
-export NODE_IPS=(172.27.137.240 172.27.137.239 172.27.137.238)
+export NODE_IPS=(10.1.80.71 10.1.80.72 10.1.80.73)
 
 # 集群各 IP 对应的主机名数组
-export NODE_NAMES=(zhangjun-k8s01 zhangjun-k8s02 zhangjun-k8s03)
+export NODE_NAMES=(k8s01 k8s02 k8s03)
 
 # etcd 集群服务地址列表
-export ETCD_ENDPOINTS="https://172.27.137.240:2379,https://172.27.137.239:2379,https://172.27.137.238:2379"
+export ETCD_ENDPOINTS="https://10.1.80.71:2379,https://10.1.80.72:2379,https://10.1.80.73:2379"
 
 # etcd 集群间通信的 IP 和端口
-export ETCD_NODES="zhangjun-k8s01=https://172.27.137.240:2380,zhangjun-k8s02=https://172.27.137.239:2380,zhangjun-k8s03=https://172.27.137.238:2380"
+export ETCD_NODES="k8s01=https://10.1.80.71:2380,k8s02=https://10.1.80.72:2380,k8s03=https://10.1.80.73:2380"
 
 # kube-apiserver 的反向代理(kube-nginx)地址端口
-export KUBE_APISERVER="https://127.0.0.1:8443"
+# export KUBE_APISERVER="https://127.0.0.1:8443"
+
+# kube-apiserver 的 VIP（HA 组件 keepalived 发布的 IP）
+export MASTER_VIP=10.1.80.77
 
 # 节点间互联网络接口名称
-export IFACE="eth0"
+export IFACE="enp0s3"
 
 # etcd 数据目录
 export ETCD_DATA_DIR="/data/k8s/etcd/data"
