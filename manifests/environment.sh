@@ -3,23 +3,41 @@
 # 生成 EncryptionConfig 所需的加密 key
 export ENCRYPTION_KEY=$(head -c 32 /dev/urandom | base64)
 
-# 集群所有机器 IP 数组
-export ALL_NODE_IPS=(10.1.80.71 10.1.80.72 10.1.80.73 10.1.80.74)
 
-# 集群所有IP 对应的主机名数组
-export ALL_NODE_NAMES=(k8s01 k8s02 k8s03 k8s04)
+# 声明节点map
+declare -A MASTER_NODES WORK_NODES ALL_NODES OTHER_MASTER_NODES OTHER_NODES
+MASTER_NODES=(['k8s-m1']="10.1.80.71" ['k8s-m2']="10.1.80.72" ['k8s-m3']="10.1.80.73")
+WORKER_NODES=(['k8s-n1']="10.1.80.74")
 
-# 集群各机器 IP 数组
-export NODE_IPS=(10.1.80.71 10.1.80.72 10.1.80.73)
+# 集群所有节点数组
+for node_name in ${!MASTER_NODES[@]}; do
+  ALL_NODES[$node_name]=${MASTER_NODES[$node_name]}
+done
 
-# 集群各 IP 对应的主机名数组
-export NODE_NAMES=(k8s01 k8s02 k8s03)
+for node_name in ${!WORKER_NODES[@]}; do
+  ALL_NODES[$node_name]=${WORKER_NODES[$node_name]}
+done
+
+# 集群内除k8s-m1外的所有节点
+for node_name in ${!ALL_NODES[@]}; do
+ #OTHER_NODES[$node_name]=${ALL_NODES[$node_name]}
+done
+unset OTHER_NODES['k8s-m1']
+
+
+# 集群内除k8s-m1外的所有Master节点
+for node_name in ${!MASTER_NODES[@]}; do
+ OTHER_MASTER_NODES[$node_name]=${MASTER_NODES[$node_name]}
+done
+unset OTHER_MASTER_NODES['k8s-m1']
+
+
 
 # etcd 集群服务地址列表
 export ETCD_ENDPOINTS="https://10.1.80.71:2379,https://10.1.80.72:2379,https://10.1.80.73:2379"
 
 # etcd 集群间通信的 IP 和端口
-export ETCD_NODES="k8s01=https://10.1.80.71:2380,k8s02=https://10.1.80.72:2380,k8s03=https://10.1.80.73:2380"
+export ETCD_NODES="k8s-m1=https://10.1.80.71:2380,k8s-m2=https://10.1.80.72:2380,k8s-m3=https://10.1.80.73:2380"
 
 # kube-apiserver 的反向代理(kube-nginx)地址端口
 # export KUBE_APISERVER="https://127.0.0.1:8443"
@@ -70,5 +88,5 @@ export CLUSTER_DNS_SVC_IP="10.254.0.2"
 # 集群 DNS 域名（末尾不带点号）
 export CLUSTER_DNS_DOMAIN="cluster.local"
 
-# 将二进制目录 /opt/k8s/bin 加到 PATH 中
-export PATH=/opt/k8s/bin:$PATH
+# 将二进制目录 /opt/k8s/bin 加到 PATH 中 注释掉否则每次执行一次source PATH就会多一个/opt/k8s/bin附加
+# export PATH=/opt/k8s/bin:$PATH
