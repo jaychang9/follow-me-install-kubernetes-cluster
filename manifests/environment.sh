@@ -5,7 +5,7 @@ export ENCRYPTION_KEY=$(head -c 32 /dev/urandom | base64)
 
 
 # 声明节点map
-declare -A MASTER_NODES WORK_NODES ALL_NODES OTHER_MASTER_NODES OTHER_NODES
+declare -A MASTER_NODES WORKER_NODES ALL_NODES OTHER_MASTER_NODES OTHER_NODES
 MASTER_NODES=(['k8s-m1']="10.1.80.71" ['k8s-m2']="10.1.80.72" ['k8s-m3']="10.1.80.73")
 WORKER_NODES=(['k8s-n1']="10.1.80.74")
 
@@ -20,10 +20,9 @@ done
 
 # 集群内除k8s-m1外的所有节点
 for node_name in ${!ALL_NODES[@]}; do
- #OTHER_NODES[$node_name]=${ALL_NODES[$node_name]}
+ OTHER_NODES[$node_name]=${ALL_NODES[$node_name]}
 done
 unset OTHER_NODES['k8s-m1']
-
 
 # 集群内除k8s-m1外的所有Master节点
 for node_name in ${!MASTER_NODES[@]}; do
@@ -31,16 +30,11 @@ for node_name in ${!MASTER_NODES[@]}; do
 done
 unset OTHER_MASTER_NODES['k8s-m1']
 
-
-
 # etcd 集群服务地址列表
 export ETCD_ENDPOINTS="https://10.1.80.71:2379,https://10.1.80.72:2379,https://10.1.80.73:2379"
 
 # etcd 集群间通信的 IP 和端口
 export ETCD_NODES="k8s-m1=https://10.1.80.71:2380,k8s-m2=https://10.1.80.72:2380,k8s-m3=https://10.1.80.73:2380"
-
-# kube-apiserver 的反向代理(kube-nginx)地址端口
-# export KUBE_APISERVER="https://127.0.0.1:8443"
 
 # kube-apiserver 的 VIP（HA 组件 keepalived 发布的 IP）
 export MASTER_VIP=10.1.80.77
@@ -88,5 +82,3 @@ export CLUSTER_DNS_SVC_IP="10.254.0.2"
 # 集群 DNS 域名（末尾不带点号）
 export CLUSTER_DNS_DOMAIN="cluster.local"
 
-# 将二进制目录 /opt/k8s/bin 加到 PATH 中 注释掉否则每次执行一次source PATH就会多一个/opt/k8s/bin附加
-# export PATH=/opt/k8s/bin:$PATH
