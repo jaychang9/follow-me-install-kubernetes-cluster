@@ -16,6 +16,8 @@
 keytool -import -v -trustcacerts -alias appmanagement -file "PATH...\\ca.pem" -storepass password -keystore cacerts
 ```
 
+或者可以直接将ca.pem后缀改为ca.crt，双击后直接导入，证书存储选择 “受信任的根证书颁发机构”
+
 再次访问 [apiserver 地址](https://172.27.137.240:6443/)，已信任，但提示 401，未授权的访问：
 
 ![ssl-success](images/ssl-success.png)
