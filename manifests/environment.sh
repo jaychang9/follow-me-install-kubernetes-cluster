@@ -39,6 +39,9 @@ export ETCD_NODES="k8s-m1=https://10.1.80.71:2380,k8s-m2=https://10.1.80.72:2380
 # kube-apiserver 的 VIP（HA 组件 keepalived 发布的 IP）
 export MASTER_VIP=10.1.80.77
 
+# kube-apiserver VIP 地址（HA 组件 haproxy 监听 8443 端口）
+export KUBE_APISERVER="https://${MASTER_VIP}:8443"
+
 # 节点间互联网络接口名称
 export IFACE="enp0s3"
 
