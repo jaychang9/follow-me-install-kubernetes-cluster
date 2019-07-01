@@ -2,7 +2,7 @@
 
 ![dashboard-home](./images/dashboard-home.png)
 
-本系列文档介绍使用二进制部署最新 `kubernetes v1.14.2` 集群的所有步骤，而不是使用 `kubeadm` 等自动化方式来部署集群。
+本系列文档介绍使用二进制部署最新 `kubernetes v1.14.3` 集群的所有步骤，而不是使用 `kubeadm` 等自动化方式来部署集群。
 
 在部署的过程中，将详细列出各组件的启动参数，它们的含义和可能遇到的问题。
 
@@ -25,27 +25,27 @@
 
 1. [00.组件版本和配置策略](00.组件版本和配置策略.md)
 1. [01.系统初始化和全局变量](01.系统初始化和全局变量.md)
-1. [02.创建CA证书和秘钥](02.创建CA证书和秘钥.md)			
-1. [03.部署kubectl命令行工具](03.部署kubectl命令行工具.md)			
-1. [04.部署etcd集群](04.部署etcd集群.md)				
-1. [05.部署flannel网络](05.部署flannel网络.md)		
+	. [02.创建CA证书和秘钥](02.创建CA证书和秘钥.md)			
+	. [03.部署kubectl命令行工具](03.部署kubectl命令行工具.md)			
+	. [04.部署etcd集群](04.部署etcd集群.md)				
+	. [05.部署flannel网络](05.部署flannel网络.md)		
 1. [06.apiserver高可用之nginx代理.md](06-0.apiserver高可用之nginx代理.md)
 1. [06-1.部署master节点](06-1.部署master节点.md)
     1. [06-2.apiserver集群](06-2.apiserver集群.md)	
     1. [06-3.controller-manager集群](06-3.controller-manager集群.md)
-    1. [06-4.scheduler集群](06-4.scheduler集群.md)		
+    	. [06-4.scheduler集群](06-4.scheduler集群.md)		
 1. [07.部署worker节点](07-0.部署worker节点.md)
     1. [07-1.docker](07-1.docker.md)					
-    1. [07-2.kubelet](07-2.kubelet.md)				
-    1. [07-3.kube-proxy](07-3.kube-proxy.md)			
-1. [08.验证集群功能](08.验证集群功能.md)			
+    	. [07-2.kubelet](07-2.kubelet.md)				
+    	. [07-3.kube-proxy](07-3.kube-proxy.md)			
+		 [08.验证集群功能](08.验证集群功能.md)			
 1. [09.部署集群插件](09-0.部署集群插件.md)
     1. [09-1.dns插件](09-1.dns插件.md)
     1. [09-2.dashboard插件](09-2.dashboard插件.md)
     1. [09-3.metrics-server插件](09-3.metrics-server插件.md)
-    1. [09-4.EFK插件](09-4.EFK插件.md)			
-1. [10.部署Docker-Registry](10.部署Docker-Registry.md)	
-1. [11.部署Harbor-Registry](11.部署Harbor-Registry.md)	
+    	. [09-4.EFK插件](09-4.EFK插件.md)			
+		 [10.部署Docker-Registry](10.部署Docker-Registry.md)	
+		 [11.部署Harbor-Registry](11.部署Harbor-Registry.md)	
 1. [12.清理集群](12.清理集群.md)
 1. [A.浏览器访问apiserver安全端口](A.浏览器访问kube-apiserver安全端口.md)
 1. [B.校验TLS证书](B.校验TLS证书.md)

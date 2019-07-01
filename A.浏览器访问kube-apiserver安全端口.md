@@ -16,7 +16,7 @@
 keytool -import -v -trustcacerts -alias appmanagement -file "PATH...\\ca.pem" -storepass password -keystore cacerts
 ```
 
-或者可以直接将ca.pem后缀改为ca.crt，双击后直接导入，证书存储选择 “受信任的根证书颁发机构”
+或者可以直接将ca.pem后缀改为ca.crt，双击后直接导入，证书存储选择 “受信任的根证书颁发机构”(chrome使用的根证书也是用的这里的根证书)
 
 再次访问 [apiserver 地址](https://172.27.137.240:6443/)，已信任，但提示 401，未授权的访问：
 
@@ -38,9 +38,30 @@ $ openssl pkcs12 -export -out admin.pfx -inkey admin-key.pem -in admin.pem -cert
 
 ![select-cert](images/select-cert.png)
 
-这一次，被授权访问 kube-apiserver 的安全端口：
+对于windows下IE浏览器，开始-》运行 certmgr.msc，导入证书admin.pfx，输入证书密码(当然也可以双击admin.pfx来导入)
+![chrome-authored](images/windows-certmgr.png)
+
+对于windows下chrome浏览器，则按如下步骤，导入admin.pfx
+
+![chrome](images/chrome-certmgr2.png)
+
+![chrome](images/chrome-certmgr3.png)
+
+![chrome](images/chrome-certmgr4.png)
+
+![chrome](images/chrome-certmgr5.png)
+
+重启浏览器，再次访问，这一次，被授权访问 kube-apiserver 的安全端口：
+
+
+![chrome-authored](images/chrome-select-cert.png)
+
 
 ![chrome-authored](images/chrome-authored.png)
+
+使用vip来访问当然也是ok的
+
+![chrome-authored-vip](images/chrome-autored-vip.png)
 
 ## 客户端选择证书的原理
 
